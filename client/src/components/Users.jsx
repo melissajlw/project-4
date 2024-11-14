@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import UserCard from './UserCard'
+import { Typography, List, Box } from '@mui/material'
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -13,12 +14,14 @@ const Users = () => {
   const userCards = users.map(user => <UserCard key={user.id} user={user} />)
 
   return (
-    <div>
-      <h3>User List</h3>
-      <ul>
-        { userCards }
-      </ul>
-    </div>
+    <Box padding={3}>
+      <Typography variant="h4" gutterBottom>
+        User List
+      </Typography>
+      <List>
+        {userCards}
+      </List>
+    </Box>
   )
 }
 
