@@ -1,10 +1,15 @@
 import React from 'react'
+import { Card, CardContent, Typography } from '@mui/material'
 
-const PlayerCard = ({player}) => {
+const PlayerCard = ({ player }) => {
   return (
-    <div>
-      <h3>{player.name}</h3>
-    </div>
+    <Card variant="outlined" sx={{ marginBottom: 2 }}>
+      <CardContent>
+        <Typography variant="h5" component="div">
+          {player.name}
+        </Typography>
+      </CardContent>
+    </Card>
   )
 }
 

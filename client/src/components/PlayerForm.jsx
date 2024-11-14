@@ -3,22 +3,23 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { headers } from '../Globals'
 import { useNavigate } from 'react-router-dom'
+import { Container, TextField, Typography, Button, Box, Paper } from '@mui/material'
 
 const PlayerForm = ({ addPlayer, loggedIn }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(!loggedIn) {
+    if (!loggedIn) {
       navigate("/login")
     }
   }, [loggedIn])
 
   const initialValues = {
-    title: ""
+    name: ""
   }
 
   const validationSchema = yup.object({
-    title: yup.string().required()
+    name: yup.string().required("Name is required")
   })
 
   const handleSubmit = values => {
@@ -42,18 +43,38 @@ const PlayerForm = ({ addPlayer, loggedIn }) => {
   })
 
   return (
-    <div>
-      <h3>Create Player</h3>
-      <form onSubmit={formik.handleSubmit}>
-        <div>
-          <label htmlFor="title">Title: </label>
-          <input type="text" name="name" id="name" value={formik.values.title} onChange={formik.handleChange} />
-          <p style={{color: "red"}}>{ formik.errors.title }</p>
-        </div><br />
-
-        <input type="submit" value="Create Player" />
-      </form>
-    </div>
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
+        <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Create Player
+          </Typography>
+        </Box>
+        <form onSubmit={formik.handleSubmit}>
+          <Box sx={{ marginBottom: 2 }}>
+            <TextField
+              fullWidth
+              id="name"
+              name="name"
+              label="Name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+            />
+          </Box>
+          <Box sx={{ textAlign: 'center' }}>
+            <Button
+              sx={{ backgroundColor: '#2e4a31', '&:hover': { backgroundColor: '#243a26' } }}
+              variant="contained"
+              type="submit"
+            >
+              Create Player
+            </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Container>
   )
 }
 

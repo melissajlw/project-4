@@ -92,7 +92,6 @@ const TeamDetails = ({ currentUser, loggedIn, userLoading, deleteTeam }) => {
       <p>{team.user.username}'s Team</p>
       {team.user.id === currentUser.id ? <><Link to={`/teams/${team.id}/team_players/new`} style={{marginRight: "5px"}}>Add Player</Link><Link to={`/teams/${team.id}/edit`} style={{marginRight: "5px"}}>Edit</Link>
       <Link to="#" onClick={handleDelete}>Delete</Link></> : null}
-      <p>Note: You can re-order your players by dragging the player to the position you want it to be.</p>
       <ul>
         {players}
       </ul>
