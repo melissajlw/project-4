@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 class TeamsResource(Resource):
     # GET /teams
     def get(self):
+        # Retrieve all teams
         teams = [team.to_dict() for team in Team.query.all()]
         return teams
     
@@ -15,6 +16,7 @@ class TeamsResource(Resource):
         data = request.get_json()
         name = data.get("name")
         try:
+            # Create a new team
             team = Team(name=name, user_id=session["user_id"])
             db.session.add(team)
             db.session.commit()
@@ -27,7 +29,7 @@ class TeamsResource(Resource):
 api.add_resource(TeamsResource, "/api/teams")
 
 class TeamResource(Resource):
-    # GET /teams/int:id
+    # GET /teams/<int:id>
     def get(self, id):
         team = Team.query.get(id)
         if team:
@@ -35,7 +37,7 @@ class TeamResource(Resource):
         else:
             return {"error": "Team does not exist"}, 400
         
-    # POST /teams/int:id
+    # PATCH /teams/<int:id>
     def patch(self, id):
         data = request.get_json()
         team = Team.query.get(id)
@@ -43,6 +45,7 @@ class TeamResource(Resource):
             return {"error": "unauthorized"}, 401
         
         try:
+            # Update team attributes
             for key in data.keys():
                 if hasattr(team, key):
                     setattr(team, key, data.get(key))
@@ -54,14 +57,14 @@ class TeamResource(Resource):
         except ValueError as e:
             return {"error": str(e)}, 422
     
-    # DELETE /teams/int:id
+    # DELETE /teams/<int:id>
     def delete(self, id):
         team = Team.query.get(id)
 
         if not team:
             return {"error": "Team does not exist"}, 400
         elif team.user.id != session["user_id"]:
-            return {"error": "Unauthorizd"}, 401
+            return {"error": "Unauthorized"}, 401
         
         db.session.delete(team)
         db.session.commit()
