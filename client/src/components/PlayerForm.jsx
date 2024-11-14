@@ -65,7 +65,7 @@ const PlayerForm = ({ addPlayer, loggedIn }) => {
           </Box>
           <Box sx={{ textAlign: 'center' }}>
             <Button
-              sx={{ backgroundColor: '#2e4a31', '&:hover': { backgroundColor: '#243a26' } }}
+              sx={{ backgroundColor: '#2e4a31', color: 'white', '&:hover': { backgroundColor: '#243a26' } }}
               variant="contained"
               type="submit"
             >

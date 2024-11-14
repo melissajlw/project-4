@@ -34,11 +34,11 @@ const Navbar = ({ currentUser, loggedIn, logoutUser }) => {
 
   const loggedInLinks = (
     <>
-      <MenuItem onClick={handleClose}><Link to="/users">View Users</Link></MenuItem>
-      <MenuItem onClick={handleClose}><Link to="/teams">View Teams</Link></MenuItem>
-      <MenuItem onClick={handleClose}><Link to="/teams/new">Create Teams</Link></MenuItem>
-      <MenuItem onClick={handleClose}><Link to="/players">View Players</Link></MenuItem>
-      <MenuItem onClick={handleClose}><Link to="/players/new">Create Players</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/users" style={{ color: 'inherit', textDecoration: 'none' }}>View Users</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/teams" style={{ color: 'inherit', textDecoration: 'none' }}>View Teams</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/teams/new" style={{ color: 'inherit', textDecoration: 'none' }}>Create Teams</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/players" style={{ color: 'inherit', textDecoration: 'none' }}>View Players</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/players/new" style={{ color: 'inherit', textDecoration: 'none' }}>Create Players</Link></MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
       <MenuItem onClick={handleClose}>{currentUser.username}</MenuItem>
     </>

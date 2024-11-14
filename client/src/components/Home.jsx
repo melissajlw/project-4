@@ -2,6 +2,8 @@ import React from 'react'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
@@ -21,6 +23,7 @@ const Home = () => {
           padding: 4,
           borderRadius: 2,
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+          border: '5px solid #2e4a31', // Add border with the same color as the navbar
         }}
       >
         <Typography
@@ -34,10 +37,19 @@ const Home = () => {
         <Typography
           variant="h6"
           component="p"
-          sx={{ textShadow: '4px 4px 8px rgba(0, 0, 0, 0.5)' }}
+          sx={{ textShadow: '4px 4px 8px rgba(0, 0, 0, 0.5)', mb: 4 }}
         >
           Create and manage your fantasy football teams with ease.
         </Typography>
+        <Button
+          component={Link}
+          to="/teams"
+          variant="contained"
+          color="primary"
+          sx={{ backgroundColor: '#2e4a31', color: 'white', '&:hover': { backgroundColor: '#243a26' } }}
+        >
+          Get Started
+        </Button>
       </Box>
     </Container>
   )

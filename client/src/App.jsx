@@ -1,5 +1,7 @@
+import './App.css'
 import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ThemeProvider, createTheme, CssBaseline, Box } from '@mui/material'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Team from './components/Team'
@@ -14,6 +16,33 @@ import PlayerList from './components/PlayerList'
 import PlayerForm from './components/PlayerForm'
 import TeamPlayerForm from './components/TeamPlayerForm'
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#213547',
+      paper: '#1d1d1d',
+    },
+    primary: {
+      main: '#90caf9',
+    },
+    secondary: {
+      main: '#f48fb1',
+    },
+  },
+  components: {
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          '&:visited': {
+            color: '#d1c4e9', // pastel purple for visited links
+          },
+        },
+      },
+    },
+  },
+})
+
 function App() {
   const [currentUser, setCurrentUser] = useState({})
   const [players, setPlayers] = useState([])
@@ -23,7 +52,7 @@ function App() {
   useEffect(() => {
     fetch('/api/check-current-user')
       .then(resp => {
-        if (resp.status == 200) {
+        if (resp.status === 200) {
           resp.json().then(data => {
             loginUser(data)
             setLoading(false)
@@ -37,9 +66,9 @@ function App() {
       .then(data => setPlayers(data))
   }, [])
     
-    const loginUser = (user) => {
-      setCurrentUser(user)
-      setLoggedIn(true)
+  const loginUser = (user) => {
+    setCurrentUser(user)
+    setLoggedIn(true)
   }
   
   const logoutUser = () => {
@@ -68,13 +97,10 @@ function App() {
         return team
       }
     })
-    // update currentUser
     const updatedCurrentUser = {
       ...currentUser,
       teams: updatedTeams
     }
-
-    // set currentUser state
     setCurrentUser(updatedCurrentUser)
   }
 
@@ -92,23 +118,29 @@ function App() {
   }
 
   return (
-    <Router>
-      <Navbar loggedIn={loggedIn} currentUser={currentUser} logoutUser={logoutUser} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/:id" element={<UserDetails />} />
-        <Route path="/teams" element={<Team teams={ currentUser.teams } loggedIn={loggedIn} loading={loading} />} />
-        <Route path="/teams/new" element={<TeamForm addTeam={ addTeam } />} />
-        <Route path="/teams/:id/edit" element={<TeamEditForm currentUser={currentUser} loggedIn={loggedIn} userLoading={loading} updateTeam={updateTeam} />} />
-        <Route path="/teams/:id" element={<TeamDetails currentUser={currentUser} loggedIn={loggedIn} userLoading={loading} deleteTeam={deleteTeam} />} />
-        <Route path="/teams/:team_id/team_players/new" element={<TeamPlayerForm teams={currentUser.teams} players={players} />} />
-        <Route path="/players" element={<PlayerList players={players} />} />
-        <Route path="/players/new" element={<PlayerForm addPlayer={ addPlayer } loggedIn={loggedIn} /> } />
-        <Route path="/signup" element={<Signup loginUser={loginUser} />} />
-        <Route path="/login" element={<Login loginUser={loginUser} />} />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Router>
+        <Navbar loggedIn={loggedIn} currentUser={currentUser} logoutUser={logoutUser} />
+        <Box sx={{ mt: 8, p: 3 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/:id" element={<UserDetails />} />
+            <Route path="/teams" element={<Team teams={ currentUser.teams } loggedIn={loggedIn} loading={loading} />} />
+            <Route path="/teams/new" element={<TeamForm addTeam={ addTeam } />} />
+            <Route path="/teams/:id/edit" element={<TeamEditForm currentUser={currentUser} loggedIn={loggedIn} userLoading={loading} updateTeam={updateTeam} />} />
+            <Route path="/teams/:id" element={<TeamDetails currentUser={currentUser} loggedIn={loggedIn} userLoading={loading} deleteTeam={deleteTeam} />} />
+            <Route path="/teams/:team_id/team_players/new" element={<TeamPlayerForm teams={currentUser.teams} players={players} />} />
+            <Route path="/players" element={<PlayerList players={players} />} />
+            <Route path="/players/new" element={<PlayerForm addPlayer={ addPlayer } loggedIn={loggedIn} /> } />
+            <Route path="/signup" element={<Signup loginUser={loginUser} />} />
+            <Route path="/login" element={<Login loginUser={loginUser} />} />
+            <Route path="/teams/:team_id/team_players/new" element={<TeamPlayerForm teams={currentUser.teams} players={players} />} />
+          </Routes>
+        </Box>
+      </Router>
+    </ThemeProvider>
   )
 }
 
