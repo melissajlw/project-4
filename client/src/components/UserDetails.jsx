@@ -25,9 +25,15 @@ const UserDetails = () => {
     )
   }
 
-  const teams = user.teams.map(t => (
+const teams = user.teams.map(t => (
     <ListItem key={t.id}>
-      <ListItemText primary={t.name} />
+      <ListItemText
+        primary={
+          <Typography variant="h6">
+            {t.name}
+          </Typography>
+        }
+      />
     </ListItem>
   ))
 
