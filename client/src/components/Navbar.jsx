@@ -1,9 +1,25 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import AccountCircle from '@mui/icons-material/AccountCircle'
 
-const Navbar = ({currentUser, loggedIn, logoutUser}) => {
-
+const Navbar = ({ currentUser, loggedIn, logoutUser }) => {
   const navigate = useNavigate()
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   const handleLogout = (e) => {
     e.preventDefault()
@@ -13,29 +29,73 @@ const Navbar = ({currentUser, loggedIn, logoutUser}) => {
 
     logoutUser()
     navigate("/signup")
+    handleClose()
   }
 
-  const loggedInLinks = <>
-    <li><Link to="/users">View Users</Link></li>
-    <li><Link to="/teams">View Teams</Link></li>
-    <li><Link to="/teams/new">Create Team</Link></li>
-    <li><Link to="/players">View Players</Link></li>
-    <li><Link to="/players/new">Create Player</Link></li>
-    <li><Link to="#" onClick={handleLogout}>Logout</Link></li>
-    <li>{ currentUser.username }</li>
-  </>
+  const loggedInLinks = (
+    <>
+      <MenuItem onClick={handleClose}><Link to="/users">View Users</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/teams">View Teams</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/teams/new">Create Teams</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/players">View Players</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/players/new">Create Players</Link></MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <MenuItem onClick={handleClose}>{currentUser.username}</MenuItem>
+    </>
+  )
 
-  const loggedOutLinks = <>
-    <li><Link to="/signup">Signup</Link></li>
-    <li><Link to="/login">Login</Link></li>
-  </>
+  const loggedOutLinks = (
+    <>
+      <MenuItem onClick={handleClose}><Link to="/signup">Signup</Link></MenuItem>
+      <MenuItem onClick={handleClose}><Link to="/login">Login</Link></MenuItem>
+    </>
+  )
 
   return (
-    <ul>
-      <li><Link to="/">Home</Link></li>
-      
-      { loggedIn ? loggedInLinks : loggedOutLinks }
-    </ul>
+    <AppBar position="static" sx={{ backgroundColor: '#2e4a31' }}>
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link>
+        </Typography>
+        {loggedIn ? (
+          <div>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {loggedInLinks}
+            </Menu>
+          </div>
+        ) : (
+          <div>
+            <Button color="inherit"><Link to="/signup" style={{ color: 'inherit', textDecoration: 'none' }}>Signup</Link></Button>
+            <Button color="inherit"><Link to="/login" style={{ color: 'inherit', textDecoration: 'none' }}>Login</Link></Button>
+          </div>
+        )}
+      </Toolbar>
+    </AppBar>
   )
 }
 

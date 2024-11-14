@@ -1,8 +1,45 @@
 import React from 'react'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 const Home = () => {
   return (
-    <h1>Welcome to the Fantasy Football Team Builder App</h1>
+    <Container maxWidth="md" sx={{ mt: 8 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 'calc(100vh - 64px)', // Adjust height to account for the navbar
+          textAlign: 'center',
+          backgroundImage: 'url(https://sc-b.digikeyassets.com/-/media/Images/Blogs/2017/September/Applying%20The%20Lessons%20of%20Fantasy%20Football%20to%20Circuit%20Board%20Design/applying-the-lessons-of-fantasy-football-img1.jpg?ts=d567c55b-9c40-4a32-9c5c-b62af00cdc0c&la=pt-BR)', // Replace with the path to your sporty background image
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          color: 'white',
+          padding: 4,
+          borderRadius: 2,
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+        }}
+      >
+        <Typography
+          variant="h3"
+          component="h1"
+          gutterBottom
+          sx={{ textShadow: '4px 4px 8px rgba(0, 0, 0, 0.5)' }}
+        >
+          Welcome!
+        </Typography>
+        <Typography
+          variant="h6"
+          component="p"
+          sx={{ textShadow: '4px 4px 8px rgba(0, 0, 0, 0.5)' }}
+        >
+          Create and manage your fantasy football teams with ease.
+        </Typography>
+      </Box>
+    </Container>
   )
 }
 
