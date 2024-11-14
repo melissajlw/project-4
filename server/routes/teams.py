@@ -5,10 +5,12 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 class TeamsResource(Resource):
+    # GET /teams
     def get(self):
         teams = [team.to_dict() for team in Team.query.all()]
         return teams
     
+    # POST /teams
     def post(self):
         data = request.get_json()
         name = data.get("name")
@@ -25,6 +27,7 @@ class TeamsResource(Resource):
 api.add_resource(TeamsResource, "/api/teams")
 
 class TeamResource(Resource):
+    # GET /teams/int:id
     def get(self, id):
         team = Team.query.get(id)
         if team:
@@ -32,6 +35,7 @@ class TeamResource(Resource):
         else:
             return {"error": "Team does not exist"}, 400
         
+    # POST /teams/int:id
     def patch(self, id):
         data = request.get_json()
         team = Team.query.get(id)
@@ -49,7 +53,8 @@ class TeamResource(Resource):
             return {"error": "Name must be unique"}, 422
         except ValueError as e:
             return {"error": str(e)}, 422
-        
+    
+    # DELETE /teams/int:id
     def delete(self, id):
         team = Team.query.get(id)
 

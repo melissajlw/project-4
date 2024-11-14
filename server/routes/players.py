@@ -5,10 +5,12 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 class PlayersResource(Resource):
+    # GET /players
     def get(self):
         players = [player.to_dict() for player in Player.query.all()]
         return players
     
+    # POST /players
     def post(self):
         data = request.get_json()
         name = data.get("name")

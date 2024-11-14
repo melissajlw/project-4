@@ -5,6 +5,7 @@ from models.models import User
 from sqlalchemy.exc import IntegrityError
 
 class CheckCurrentUser(Resource):
+  # GET /user
   def get(self):
     user = User.query.get(session.get("user_id"))
     if user:
@@ -15,6 +16,7 @@ class CheckCurrentUser(Resource):
 api.add_resource(CheckCurrentUser, "/api/check-current-user")
 
 class SignupResource(Resource):
+  # POST /user
   def post(self):
     data = request.get_json()
     username = data.get("username")
@@ -38,6 +40,7 @@ class SignupResource(Resource):
 api.add_resource(SignupResource, "/api/signup")
 
 class LoginResource(Resource):
+  # POST /user
   def post(self):
     data = request.get_json()
     username = data.get('username')
@@ -54,6 +57,7 @@ class LoginResource(Resource):
 api.add_resource(LoginResource, "/api/login")
 
 class LogoutResource(Resource):
+  # DELETE /user
   def delete(self):
     if session.get("user_id"):
       del session["user_id"]
@@ -64,6 +68,7 @@ class LogoutResource(Resource):
 api.add_resource(LogoutResource, "/api/logout")
 
 class UsersResource(Resource):
+  # GET /user
   def get(self):
     users = [user.to_dict() for user in User.query.all()]
     return users, 200
@@ -71,6 +76,7 @@ class UsersResource(Resource):
 api.add_resource(UsersResource, '/api/users')
 
 class UserResource(Resource):
+  # GET /user/int:id
   def get(self, id):
     user = User.query.get(id)
     return user.to_dict(), 200
