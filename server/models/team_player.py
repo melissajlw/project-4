@@ -2,7 +2,6 @@ from config import db
 from sqlalchemy_serializer import SerializerMixin
 
 class TeamPlayer(db.Model, SerializerMixin):
-    # plural version of the class
     __tablename__ = "team_players"
 
     serialize_rules=(

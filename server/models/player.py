@@ -3,7 +3,6 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 
 class Player(db.Model, SerializerMixin):
-    # plural version of the class
     __tablename__ = "players"
 
     serialize_rules=(
