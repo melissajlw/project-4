@@ -21,9 +21,9 @@ const Home = () => {
           backgroundPosition: 'center',
           color: 'white',
           padding: 4,
-          borderRadius: 2,
+          borderRadius: 4,
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          border: '5px solid #2e4a31', // Add border with the same color as the navbar
+          border: '8px solid #2e4a31', // Add border with the same color as the navbar
         }}
       >
         <Typography
